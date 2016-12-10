@@ -32,7 +32,7 @@ class SavitriQuotesController extends Telegram.TelegramBaseController {
     get routes() {
 
         return {
-            quoteCommand: 'savitriQuotesHandler'
+            savitriQuoteCommand: 'savitriQuotesHandler'
         }
     }
 }
