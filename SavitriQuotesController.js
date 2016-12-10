@@ -3,17 +3,18 @@ const axios = require("axios");
 
 const utils = require("./utils");
 
-class QuotesController extends Telegram.TelegramBaseController {
+class SavitriQuotesController extends Telegram.TelegramBaseController {
     constructor() {
         super();
 
         axios.get(utils.getURL("quotes"))
             .then(function (response) {
-                this.quotes = response.data.quotes;
+                this.quotes = response.data.quotes
+                    .filter(volume => volume.comp === "cwsa" && (volume.vol === "33" || volume.vol === "34"));
             }.bind(this));
     }
 
-    quotesHandler($) {
+    savitriQuotesHandler($) {
         const quotesLength = this.quotes.length;
         const randomBookIndex = Math.floor(quotesLength * Math.random());
         const randomBook = this.quotes[randomBookIndex];
@@ -31,9 +32,9 @@ class QuotesController extends Telegram.TelegramBaseController {
     get routes() {
 
         return {
-            quoteCommand: 'quotesHandler'
+            quoteCommand: 'savitriQuotesHandler'
         }
     }
 }
 
-module.exports = QuotesController;
+module.exports = SavitriQuotesController;
